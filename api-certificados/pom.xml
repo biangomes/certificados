@@ -62,6 +62,53 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<configuration>
+					<!-- Configuração para o ambiente de produção -->
+					<configFiles>
+						<configFile>src/main/resources/application-prod.properties</configFile>
+					</configFiles>
+					<locations>
+						<location>filesystem:src/main/resources/db/migration</location>
+					</locations>
+					<!-- Outras configurações para produção, se necessário -->
+				</configuration>
+				<executions>
+					<execution>
+						<id>prod-flyway</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>migrate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Configuração do plugin Flyway para ambiente de desenvolvimento -->
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<configuration>
+					<!-- Configuração para o ambiente de desenvolvimento -->
+					<configFiles>
+						<configFile>src/main/resources/application-dev.properties</configFile>
+					</configFiles>
+					<locations>
+						<location>filesystem:src/test/resources/db/migration</location>
+					</locations>
+					<!-- Outras configurações para desenvolvimento, se necessário -->
+				</configuration>
+				<executions>
+					<execution>
+						<id>dev-flyway</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>migrate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
